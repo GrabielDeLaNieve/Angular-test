@@ -1,0 +1,124 @@
+<div class="container main-container">
+    <div class="row">
+        <div class="col-lg-6">
+  
+            <div class="hero-list" *ngIf="edit else notEdit">
+             <p class="display-4">Form edit</p>
+            </div>
+            <ng-template #notEdit>
+             <div><p class="display-4">Form create</p></div>
+            </ng-template>
+        
+            <hr/>
+            <img src="../../../../assets/undraw_online_friends_x73e.svg" width="100%" />
+        </div>
+        <div class="col-lg-6" style="margin-top: 6%;">
+            
+            <form autocomplete="off" [formGroup]="form" (ngSubmit)="edit ? handleEdit() : handleSave()">
+      
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Name</label>
+                    <div class="col">
+                        <input class="form-control"
+                        type="text"
+                        placeholder="Name"
+                        formControlName="firstName"
+                        [class.is-invalid]="usuarioNoValido">
+                        <small *ngIf="usuarioNoValido" class="text-danger">
+                            Required number greater than 5
+                        </small>
+                        
+         
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Last Name</label>
+                    <div class="col">
+                        <input class="form-control"
+                        type="text"
+                        placeholder="Last Name"
+                        formControlName="lastName"
+                        [class.is-invalid]="lastNameNoValido">
+                        <small *ngIf="lastNameNoValido" class="text-danger">
+                            Last Name required
+                        </small>
+         
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Email</label>
+                    <div class="col">
+                        <input class="form-control"
+                        type="text"
+                        placeholder="Email"
+                        formControlName="email"
+                        [class.is-invalid]="emailInValid">
+                        <small *ngIf="emailInValid" class="text-danger">
+                            Email required
+                        </small>
+         
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Adress</label>
+                    <div class="col">
+                        <input class="form-control"
+                        type="text"
+                        placeholder="Adress"
+                        formControlName="adress"
+                        [class.is-invalid]="adressInValid">
+                        <small *ngIf="adressInValid" class="text-danger">
+                            Adress required
+                        </small>
+                    </div>
+                </div>
+                
+        
+                <div *ngIf="switch">
+                    <div class="row">
+                        <div class="col">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                    <th>#</th>
+                                    <th>Number</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+
+                                <tbody formArrayName="phoneNumbers">
+                                    <tr *ngFor="let control of phoneNumbers.controls; let i = index">
+                                        <td>{{ i + 1}}</td>
+                                        <td>
+                                            <input class="form-control"
+                                            type="text"
+                                            [formControlName]="i"
+                                            >
+                                            
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger"
+                                            (click)="handleDeleteNumber(i)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div *ngIf="edit; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock><button class="btn btn-outline-warning" type="submit" >Edit <i class="fas fa-user-edit"></i></button></ng-template>
+                <ng-template #elseBlock><button class="btn btn-outline-primary" type="submit">Save <i class="fas fa-folder-plus"></i></button></ng-template>
+                
+                <button class="btn btn-outline-primary"  type="button" style="margin-left: 5%;" (click)="handleAddNumber()">Number <i class="fas fa-plus-circle"></i></button>
+
+                <button style="margin-left: 5%;" class="btn btn-outline-danger" type="button" (click)="redirectAction()">Cancel <i class="fas fa-door-open"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
