@@ -10,6 +10,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './services/SEED.service';
 import { NgxPaginationModule } from "ngx-pagination";
 
+
 @NgModule({
   declarations: [
     AppComponent,
