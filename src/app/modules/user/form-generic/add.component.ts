@@ -76,7 +76,7 @@ export class AddComponent implements OnInit {
           Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$")
         ]
       ],
-      phoneNumbers: this.fb.array([], validateSize),
+      phoneNumbers: this.fb.array([]),
       adress: ["", Validators.required]
     });
   }
