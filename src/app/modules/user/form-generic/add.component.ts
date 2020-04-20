@@ -56,6 +56,7 @@ export class AddComponent implements OnInit {
     return this.form.get("adress").invalid && this.form.get("adress").touched;
   }
 
+
   get phoneInValid() {
     return (
       this.form.get("phoneNumbers").invalid &&
@@ -66,7 +67,7 @@ export class AddComponent implements OnInit {
   handleBuildForm(): void {
     this.form = this.fb.group({
       id: [""],
-      firstName: ["", [Validators.required, Validators.minLength(5)]],
+      firstName: ["", [Validators.required, Validators.minLength(4)]],
       lastName: ["", Validators.required],
       email: [
         "",
@@ -75,7 +76,7 @@ export class AddComponent implements OnInit {
           Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$")
         ]
       ],
-      phoneNumbers: this.fb.array([]),
+      phoneNumbers: this.fb.array([], validateSize),
       adress: ["", Validators.required]
     });
   }
@@ -160,7 +161,7 @@ export class AddComponent implements OnInit {
 }
 
 function validateSize(arr: FormArray) {
-  return arr.length > 3
+  return arr.length < 1
     ? {
         invalidSize: true
       }

@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-6" style="margin-top: 6%;">
             
-            <form autocomplete="off" [formGroup]="form" (ngSubmit)="edit ? handleEdit() : handleSave()">
+            <form required autocomplete="off" [formGroup]="form" (ngSubmit)="edit ? handleEdit() : handleSave()">
       
                 <div class="form-group row">
                     <label class="col-2 col-form-label">Name</label>
@@ -25,7 +25,7 @@
                         formControlName="firstName"
                         [class.is-invalid]="usuarioNoValido">
                         <small *ngIf="usuarioNoValido" class="text-danger">
-                            Required number greater than 5
+                            Required number greater than 4
                         </small>
                         
          
@@ -92,9 +92,11 @@
                                         <td>{{ i + 1}}</td>
                                         <td>
                                             <input class="form-control"
-                                            type="text"
                                             [formControlName]="i"
+                                            type="number"
+                                            required
                                             >
+                                           
                                             
                                         </td>
                                         <td>
