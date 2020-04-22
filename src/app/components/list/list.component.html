@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-log-12">
+
+            <table #dataTable class="table table-hover" style="margin-top: 13%; width: 100%;">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Adress</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let counter of users | paginate: {itemsPerPage: 5, currentPage: p} index as i">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{counter.firstName}}</td>
+                  <td>{{counter.lastName}}</td>
+                  <td>{{counter.email}}</td>
+                  <td>{{counter.adress}}</td>
+                  <td>{{counter.phoneNumbers[0]}}</td>
+                  <td>
+                    <button value="{{counter.id}}" [routerLink]="['/users/add/update', counter.id]" class="btn btn-info">
+                      <i class="fas fa-pen-square"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button (click)="handleDelete(counter)" type="button"  class="btn btn-danger">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+        </div>
+    </div>
+</div>

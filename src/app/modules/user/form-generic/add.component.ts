@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
+import { ValidatorsServices } from 'src/app/services/validators.service';
 
 
 
@@ -21,6 +23,8 @@ export class AddComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     public dbService: UserService,
+    public ls: LocalStorageService,
+    public vl: ValidatorsServices,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -38,30 +42,8 @@ export class AddComponent implements OnInit {
       this.edit = false;
     }
   }
-
-  get usuarioNoValido() {
-    return (
-      this.form.get("firstName").invalid && this.form.get("firstName").touched
-    );
-  }
-  get lastNameNoValido() {
-    return (
-      this.form.get("lastName").invalid && this.form.get("lastName").touched
-    );
-  }
-  get emailInValid() {
-    return this.form.get("email").invalid && this.form.get("email").touched;
-  }
-  get adressInValid() {
-    return this.form.get("adress").invalid && this.form.get("adress").touched;
-  }
-
-
-  get phoneInValid() {
-    return (
-      this.form.get("phoneNumbers").invalid &&
-      this.form.get("phoneNumbers").touched
-    );
+  get phoneNumbers(): FormArray {
+    return this.form.get("phoneNumbers") as FormArray;
   }
 
   handleBuildForm(): void {
@@ -69,58 +51,55 @@ export class AddComponent implements OnInit {
       id: [""],
       firstName: ["", [Validators.required, Validators.minLength(4)]],
       lastName: ["", Validators.required],
-      email: [
-        "",
-        [
-          Validators.required,
-          Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$")
-        ]
-      ],
+      email: [ "", [ Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$")]],
       phoneNumbers: this.fb.array([]),
       adress: ["", Validators.required]
     });
   }
 
   handleSave(): void {
-    if (this.form.valid) {
-      this.users = JSON.parse(localStorage.getItem("users"));
-      this.user = this.form.value;
-      this.user.id = this.users.length + 1;
-
-      this.dbService.postUser(this.user).subscribe(data => {
-        this.users.push(data);
-        localStorage.setItem("users", JSON.stringify(this.users));
-        console.log(this.users);
-      });
-
-      this.router.navigate(["/"]);
+    if (
+      this.form.valid &&
+      this.vl.validatePhoneInputs(this.form.value.phoneNumbers)
+    ) {
+      if (this.ls.handleGetLocalStorage != null) {
+        this.users = [...this.ls.handleGetLocalStorage()];
+        this.user = this.form.value;
+        this.user.id =
+          this.users.length === 0
+            ? 1
+            : this.users[this.users.length - 1].id + 1;
+        this.users.push(this.user);
+        this.ls.handleSetLocalStorage(this.users);
+        this.router.navigate(["/"]);
+      }
     }
   }
 
   handleEdit(): void {
-    if (this.form.valid) {
-      let array = JSON.parse(localStorage.getItem("users"));
+    if (
+      this.form.valid &&
+      this.vl.validatePhoneInputs(this.form.value.phoneNumbers)
+    ) {
+      let array = this.ls.handleGetLocalStorage();
       this.users = array;
-
       this.user = this.form.value;
       this.user.id = Number.parseInt(this.route.snapshot.paramMap.get("id"));
-
       this.dbService.putUser(this.user).subscribe(user => {
         const indexToUpdate = user
           ? this.users.findIndex(u => u.id == user.id)
           : -1;
         if (indexToUpdate > -1) {
           this.users[indexToUpdate] = user;
-          localStorage.setItem("users", JSON.stringify(this.users));
+          this.ls.handleSetLocalStorage(this.users);
         }
       });
-
       this.router.navigate(["/"]);
     }
   }
 
   handleGetById(): void {
-    let dataLocal = JSON.parse(localStorage.getItem("users"));
+    let dataLocal = this.ls.handleGetLocalStorage();
     this.users = dataLocal;
     let id = this.route.snapshot.paramMap.get("id");
     let userById = this.users.filter(
@@ -129,18 +108,18 @@ export class AddComponent implements OnInit {
     for (let i = 0; i < userById.phoneNumbers.length; i++) {
       this.handleAddNumber();
     }
-    this.form.reset({
-      firstName: userById.firstName,
-      lastName: userById.lastName,
-      email: userById.email,
-      adress: userById.adress,
-      phoneNumbers: userById.phoneNumbers
-    });
+    this.resetForm(userById);
     this.user = userById;
   }
 
-  get phoneNumbers(): FormArray {
-    return this.form.get("phoneNumbers") as FormArray;
+  resetForm(user): any {
+    return this.form.reset({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      adress: user.adress,
+      phoneNumbers: user.phoneNumbers
+    });
   }
 
   handleAddNumber(): void {
@@ -156,15 +135,6 @@ export class AddComponent implements OnInit {
   }
 
   redirectAction() {
-    this.router.navigate(["/"])
+    this.router.navigate(["/"]);
   }
 }
-
-function validateSize(arr: FormArray) {
-  return arr.length < 1
-    ? {
-        invalidSize: true
-      }
-    : null;
-}
-

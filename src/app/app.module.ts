@@ -9,11 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './services/SEED.service';
 import { NgxPaginationModule } from "ngx-pagination";
+import { ListComponent } from './components/list/list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ListComponent,
   ],
   imports: [
     BrowserModule,

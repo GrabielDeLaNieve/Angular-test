@@ -1,0 +1,10 @@
+.btn-outline-primary {
+    color: #6C63FF !important;
+    border-color: #6C63FF !important;
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: #6C63FF !important;
+    border-color: #6C63FF !important;
+}

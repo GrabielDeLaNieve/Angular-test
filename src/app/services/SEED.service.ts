@@ -8,7 +8,7 @@ export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     let users = [
       {
-        id: 1,
+        id: 0,
         firstName: "Grabiel",
         lastName: "De La Nieve",
         email: "grabiel@gmail.com",
@@ -16,7 +16,7 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["8094034705" ]
       },
       {
-        id: 2,
+        id: 1,
         firstName: "Darlin",
         lastName: "De La Nieve",
         email: "darlin@gmail.com",
@@ -24,7 +24,7 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["8094563625"]
       },
       {
-        id: 3,
+        id: 2,
         firstName: "Franny",
         lastName: "Tejada",
         email: "franny@gmail.com",
@@ -32,7 +32,7 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["8095681236"]
       },
       {
-        id: 4,
+        id: 3,
         firstName: "Kevin",
         lastName: "Smith",
         email: "kevin@gmail.com",
@@ -40,7 +40,7 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["8095642315"]
       },
       {
-        id: 5,
+        id: 4,
         firstName: "Darwin",
         lastName: "De La Nieve",
         email: "darwin@gmail.com",
@@ -48,7 +48,7 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["8066543815"]
       },
       {
-        id: 6,
+        id: 5,
         firstName: "Johan",
         lastName: "Rivas",
         email: "johan@gmail.com",
@@ -56,7 +56,7 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["809531256" ]
       },
       {
-        id: 7,
+        id: 6,
         firstName: "Pedro",
         lastName: "Ramirez",
         email: "pedroramirez@gmail.com",
@@ -64,7 +64,7 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["8095648315"]
       },
       {
-        id: 8,
+        id: 7,
         firstName: "Karen",
         lastName: "Dominguez",
         email: "karen@gmail.com",
@@ -72,7 +72,7 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["8092136954"]
       },
       {
-        id: 9,
+        id: 8,
         firstName: "Minerva",
         lastName: "Perez",
         email: "minerva@gmail.com",
@@ -80,8 +80,8 @@ export class InMemoryDataService implements InMemoryDbService {
         phoneNumbers: ["8095642452" ]
       },
       {
-        id: 10,
-        firstName: "Ramon",
+        id: 9,
+        firstName: "yayaay",
         lastName: "Herrera",
         email: "ramon@gmail.com",
         adress: "Villa Altagracia",

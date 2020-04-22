@@ -10,7 +10,7 @@
             </ng-template>
         
             <hr/>
-            <img src="../../../../assets/undraw_online_friends_x73e.svg" width="100%" />
+            <img  src="../../../../assets/undraw_online_friends_x73e.svg" width="100%" />
         </div>
         <div class="col-lg-6" style="margin-top: 6%;">
             
@@ -23,8 +23,8 @@
                         type="text"
                         placeholder="Name"
                         formControlName="firstName"
-                        [class.is-invalid]="usuarioNoValido">
-                        <small *ngIf="usuarioNoValido" class="text-danger">
+                        >
+                        <small *ngIf="form.get('firstName').invalid && form.get('firstName').touched" class="text-danger">
                             Required number greater than 4
                         </small>
                         
@@ -38,8 +38,8 @@
                         type="text"
                         placeholder="Last Name"
                         formControlName="lastName"
-                        [class.is-invalid]="lastNameNoValido">
-                        <small *ngIf="lastNameNoValido" class="text-danger">
+                        >
+                        <small *ngIf="form.get('lastName').invalid && form.get('lastName').touched" class="text-danger">
                             Last Name required
                         </small>
          
@@ -52,8 +52,8 @@
                         type="text"
                         placeholder="Email"
                         formControlName="email"
-                        [class.is-invalid]="emailInValid">
-                        <small *ngIf="emailInValid" class="text-danger">
+                        >
+                        <small *ngIf="form.get('email').invalid && form.get('email').touched" class="text-danger">
                             Email required
                         </small>
          
@@ -67,8 +67,9 @@
                         type="text"
                         placeholder="Adress"
                         formControlName="adress"
-                        [class.is-invalid]="adressInValid">
-                        <small *ngIf="adressInValid" class="text-danger">
+                        >
+                        <!-- form.get("firstName").invalid && this.form.get("firstName").touched -->
+                        <small *ngIf="form.get('adress').invalid && form.get('adress').touched"  class="text-danger">
                             Adress required
                         </small>
                     </div>
@@ -94,7 +95,6 @@
                                             <input class="form-control"
                                             [formControlName]="i"
                                             type="number"
-                                            required
                                             >
                                            
                                             
@@ -114,8 +114,8 @@
 
                 
                 <div *ngIf="edit; then thenBlock else elseBlock"></div>
-                <ng-template #thenBlock><button class="btn btn-outline-warning" type="submit" >Edit <i class="fas fa-user-edit"></i></button></ng-template>
-                <ng-template #elseBlock><button class="btn btn-outline-primary" type="submit">Save <i class="fas fa-folder-plus"></i></button></ng-template>
+                <ng-template #thenBlock><button class="btn btn-outline-warning" type="submit" [disabled]="form.invalid">Edit <i class="fas fa-user-edit"></i></button></ng-template>
+                <ng-template #elseBlock><button class="btn btn-outline-primary" type="submit" [disabled]="form.invalid">Save <i class="fas fa-folder-plus"></i></button></ng-template>
                 
                 <button class="btn btn-outline-primary"  type="button" style="margin-left: 5%;" (click)="handleAddNumber()">Number <i class="fas fa-plus-circle"></i></button>
 

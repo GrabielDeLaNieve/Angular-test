@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/models/user';
+import { LocalStorageService } from 'src/app/services/localstorage.service';
+
 
 @Component({
   selector: "app-home-page",
@@ -9,30 +9,18 @@ import { User } from 'src/app/models/user';
   styleUrls: ["./home-page.component.css"]
 })
 export class HomePageComponent implements OnInit {
-  users: User[];
-  user: User[];
-  p: number = 1;
+  
 
-  constructor(private router: Router, private dbService: UserService) {}
+  constructor(private db: UserService, private ls: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.handleGetAll();
+    this.handleLoadU();
   }
 
-  handleDelete(user: User): void {
-    this.users = JSON.parse(localStorage.getItem("users"));
-    this.users = this.users.filter(u => u.id != user.id);
-    localStorage.setItem("users", JSON.stringify(this.users));
-  }
-
-  handleGetAll(): void {
-    this.dbService.getAllUsers().subscribe((res: User[]) => {
-      if (localStorage.getItem("users") != null) {
-        this.users = JSON.parse(localStorage.getItem("users"));
-        return;
-      }
-      this.users = res;
-      localStorage.setItem("users", JSON.stringify(res));
-    });
+  handleLoadU(): void {
+    this.ls.handleGetLocalStorage ? null : this.db.getAllUsers().subscribe(
+      res => this.ls.handleSetLocalStorage(res),
+      error => console.log(error)
+    );
   }
 }

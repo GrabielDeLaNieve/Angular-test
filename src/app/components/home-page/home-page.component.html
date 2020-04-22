@@ -1,54 +1,19 @@
 <div class="container">
     <div class="row">
-        <div class="col-lg-4">
-            <p class="display-4">Home</p>
+        <div class="col-lg-7">
+            <p class=" display-4">Home</p>
             <hr>
-             <img class="img-svg" src="../../../assets/undraw_online_friends_x73e.svg" width="100%" alt="">
+
+            <p class="lead">Saving your contacts here.
+
+            </p>
             
-            <a style="margin-top: 5%;" [routerLink]="['/users/add']"  class="btn btn-outline-primary">Create <i class="fas fa-running"></i></a>
-            </div>
-        <div class="col-lg-8">
+            <a [routerLink]="['/users/add']"  class="btn  btn-outline-primary">Create <i class="fas fa-running"></i></a>
+        </div>
+        <div class="col-lg-4">
+            <img  style="margin-top: 30%;" class="img-svg" src="../../../assets/undraw_online_friends_x73e.svg" width="150%" alt="">
             
-            <table #dataTable class="table table-hover" style="margin-top: 13%; width: 100%;">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Adress</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let counter of users | paginate: {itemsPerPage: 5, currentPage: p} index as i">
-                  <th scope="row">{{i+1}}</th>
-                  <td>{{counter.firstName}}</td>
-                  <td>{{counter.lastName}}</td>
-                  <td>{{counter.email}}</td>
-                  <td>{{counter.adress}}</td>
-                  <td>{{counter.phoneNumbers[0]}}</td>
-                  <td>
-                    <button value="{{counter.id}}" [routerLink]="['/users/add/update', counter.id]" class="btn btn-info">
-                      <i class="fas fa-pen-square"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <button (click)="handleDelete(counter)" type="button"  class="btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-           
-          </div>
-        </div>
     </div>
+    </div>
+    
 </div>
